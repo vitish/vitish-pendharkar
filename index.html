@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vitish Pendharkar — Senior Technical Writer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --orange:     #F4600C;
+    --orange-lt:  #FF8340;
+    --orange-dim: #FDE8DA;
+    --sky:        #38B6E8;
+    --sky-lt:     #C5ECFA;
+    --violet:     #6C47C9;
+    --violet-lt:  #EDE8FF;
+    --ink:        #1A1210;
+    --ink-mid:    #4A3D38;
+    --cream:      #FDF8F4;
+    --white:      #FFFFFF;
+    --border:     #EBE3DD;
+    --shadow:     0 4px 32px rgba(244,96,12,.10);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw;
+    height: 64px;
+    background: rgba(253,248,244,.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--orange);
+    letter-spacing: -.02em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: .85rem; font-weight: 500; letter-spacing: .04em;
+    text-transform: uppercase; color: var(--ink-mid);
+    text-decoration: none; transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--orange); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 100px 5vw 60px;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg-shape {
+    position: absolute; right: -120px; top: -80px;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse at 60% 40%, var(--sky-lt) 0%, var(--violet-lt) 50%, transparent 75%);
+    border-radius: 50%;
+    opacity: .55;
+    z-index: 0;
+  }
+  .hero-left { position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--orange-dim); color: var(--orange);
+    font-size: .78rem; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; padding: .35rem .85rem;
+    border-radius: 50px; margin-bottom: 1.5rem;
+    border: 1px solid rgba(244,96,12,.2);
+  }
+  .hero-badge span { width: 6px; height: 6px; background: var(--orange); border-radius: 50%; display: inline-block; animation: pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.2rem);
+    line-height: 1.08;
+    letter-spacing: -.03em;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+  h1 em { color: var(--orange); font-style: normal; }
+
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7;
+    color: var(--ink-mid); max-width: 480px;
+    margin-bottom: 2rem;
+  }
+  .hero-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2.2rem; }
+  .hero-tag {
+    font-size: .75rem; font-weight: 500; padding: .3rem .75rem;
+    border-radius: 50px; border: 1.5px solid;
+  }
+  .tag-sky   { color: var(--sky);    border-color: var(--sky);    background: var(--sky-lt); }
+  .tag-violet{ color: var(--violet); border-color: var(--violet); background: var(--violet-lt); }
+  .tag-orange{ color: var(--orange); border-color: var(--orange); background: var(--orange-dim); }
+
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .7rem 1.6rem; border-radius: 50px;
+    font-size: .9rem; font-weight: 600; cursor: pointer;
+    text-decoration: none; transition: all .25s;
+    border: 2px solid transparent;
+  }
+  .btn-primary { background: var(--orange); color: #fff; }
+  .btn-primary:hover { background: var(--orange-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(244,96,12,.3); }
+  .btn-outline { background: transparent; color: var(--ink); border-color: var(--border); }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
+
+  /* Avatar */
+  .hero-right { position: relative; z-index: 1; display: flex; justify-content: center; }
+  .avatar-wrap {
+    position: relative; width: 340px; height: 340px;
+  }
+  .avatar-ring {
+    position: absolute; inset: -16px;
+    border-radius: 50%;
+    background: conic-gradient(var(--orange) 0deg 120deg, var(--sky) 120deg 240deg, var(--violet) 240deg 360deg);
+    animation: spin 10s linear infinite;
+    opacity: .35;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar-circle {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange-dim) 0%, var(--sky-lt) 50%, var(--violet-lt) 100%);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    border: 4px solid var(--white);
+    box-shadow: var(--shadow);
+  }
+  .avatar-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem; font-weight: 900;
+    color: var(--orange);
+    letter-spacing: -.05em;
+    user-select: none;
+  }
+  .avatar-note {
+    position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--white); border: 1px solid var(--border);
+    font-size: .72rem; color: var(--ink-mid); padding: .3rem .8rem;
+    border-radius: 50px; white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  }
+  .stat-cards {
+    position: absolute; display: flex; flex-direction: column; gap: .75rem;
+    right: -40px; top: 30px;
+  }
+  .stat-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 14px; padding: .7rem 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,.07);
+    min-width: 130px;
+  }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--orange); font-weight: 700; }
+  .stat-lbl { font-size: .7rem; color: var(--ink-mid); font-weight: 500; }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 90px 5vw; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--orange); margin-bottom: .75rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    letter-spacing: -.03em; line-height: 1.15;
+    margin-bottom: 1rem; color: var(--ink);
+  }
+  .section-lead {
+    font-size: 1rem; color: var(--ink-mid); line-height: 1.7;
+    max-width: 600px; margin-bottom: 3rem;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--orange), var(--sky));
+    border-radius: 2px; margin: 1rem 0 2.5rem;
+  }
+
+  /* ── SKILLS ── */
+  #skills { background: var(--white); }
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  .skill-card {
+    border: 1.5px solid var(--border); border-radius: 16px;
+    padding: 1.5rem; background: var(--cream);
+    transition: all .25s;
+  }
+  .skill-card:hover { border-color: var(--orange); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .skill-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; margin-bottom: 1rem;
+  }
+  .skill-icon.orange { background: var(--orange-dim); }
+  .skill-icon.sky    { background: var(--sky-lt); }
+  .skill-icon.violet { background: var(--violet-lt); }
+  .skill-card h3 { font-size: .95rem; font-weight: 600; margin-bottom: .6rem; }
+  .skill-pills { display: flex; flex-wrap: wrap; gap: .35rem; }
+  .pill {
+    font-size: .72rem; font-weight: 500; padding: .25rem .65rem;
+    border-radius: 50px; background: var(--white);
+    border: 1px solid var(--border); color: var(--ink-mid);
+  }
+
+  /* ── EXPERIENCE ── */
+  #experience { background: var(--cream); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--orange), var(--sky), var(--violet));
+    border-radius: 2px;
+  }
+  .tl-item {
+    position: relative; margin-bottom: 2.5rem;
+    padding-left: 1.8rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: opacity .5s ease, transform .5s ease;
+  }
+  .tl-item.visible { opacity: 1; transform: translateX(0); }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2.5px solid var(--white);
+    box-shadow: 0 0 0 2px var(--orange);
+    background: var(--orange);
+  }
+  .tl-dot.sky    { background: var(--sky);    box-shadow: 0 0 0 2px var(--sky); }
+  .tl-dot.violet { background: var(--violet); box-shadow: 0 0 0 2px var(--violet); }
+  .tl-header { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: .5rem; margin-bottom: .4rem; }
+  .tl-company { font-weight: 700; font-size: 1rem; color: var(--ink); }
+  .tl-role { font-size: .88rem; color: var(--orange); font-weight: 600; margin-bottom: .2rem; }
+  .tl-date {
+    font-family: 'DM Mono', monospace; font-size: .72rem;
+    color: var(--white); background: var(--ink-mid);
+    padding: .2rem .65rem; border-radius: 50px;
+  }
+  .tl-desc { font-size: .9rem; color: var(--ink-mid); line-height: 1.65; }
+  .tl-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .7rem; }
+  .tl-tag {
+    font-size: .7rem; font-weight: 500; padding: .2rem .6rem;
+    border-radius: 50px; background: var(--orange-dim);
+    color: var(--orange); border: 1px solid rgba(244,96,12,.2);
+  }
+  .tl-tag.sky    { background: var(--sky-lt);    color: var(--sky);    border-color: rgba(56,182,232,.2); }
+  .tl-tag.violet { background: var(--violet-lt); color: var(--violet); border-color: rgba(108,71,201,.2); }
+
+  /* ── PORTFOLIO ── */
+  #portfolio { background: var(--white); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 2rem; }
+  .p-card {
+    border: 1.5px solid var(--border); border-radius: 20px;
+    overflow: hidden; background: var(--cream);
+    transition: all .3s; display: flex; flex-direction: column;
+  }
+  .p-card:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(244,96,12,.12); border-color: var(--orange); }
+  .p-card-header {
+    padding: 2rem 2rem 1.5rem;
+    background: linear-gradient(135deg, var(--orange-dim), var(--sky-lt));
+    position: relative; overflow: hidden;
+  }
+  .p-card-header.violet-bg { background: linear-gradient(135deg, var(--violet-lt), var(--sky-lt)); }
+  .p-card-icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--white); display: flex; align-items: center;
+    justify-content: center; font-size: 1.5rem;
+    margin-bottom: 1rem; box-shadow: 0 4px 12px rgba(0,0,0,.1);
+  }
+  .p-card-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--ink); margin-bottom: .3rem; }
+  .p-card-client { font-size: .78rem; font-weight: 600; color: var(--orange); text-transform: uppercase; letter-spacing: .05em; }
+  .p-card-body { padding: 1.5rem 2rem 2rem; flex: 1; display: flex; flex-direction: column; }
+  .p-card-body p { font-size: .9rem; color: var(--ink-mid); line-height: 1.7; flex: 1; margin-bottom: 1.2rem; }
+  .p-outcome {
+    background: var(--orange-dim); border-radius: 10px; padding: .75rem 1rem;
+    font-size: .82rem; color: var(--orange); font-weight: 600;
+    margin-bottom: 1.2rem; line-height: 1.5;
+  }
+  .p-outcome.violet-outcome { background: var(--violet-lt); color: var(--violet); }
+
+  /* ── AWARDS ── */
+  #awards { background: linear-gradient(135deg, var(--orange) 0%, #E8490A 100%); }
+  #awards .section-label { color: rgba(255,255,255,.7); }
+  #awards h2 { color: var(--white); }
+  #awards .divider { background: linear-gradient(90deg, rgba(255,255,255,.6), rgba(255,255,255,.2)); }
+  .awards-inner {
+    display: flex; align-items: center; gap: 4rem; flex-wrap: wrap;
+  }
+  .award-icon-wrap {
+    flex-shrink: 0;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    border: 3px solid rgba(255,255,255,.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3.5rem;
+  }
+  .award-body { flex: 1; min-width: 260px; }
+  .award-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; color: var(--white); margin-bottom: .5rem;
+  }
+  .award-body p { color: rgba(255,255,255,.8); font-size: 1rem; line-height: 1.7; max-width: 520px; }
+  .award-year {
+    display: inline-block; margin-top: 1rem;
+    background: rgba(255,255,255,.2); border: 1px solid rgba(255,255,255,.35);
+    color: var(--white); font-family: 'DM Mono', monospace;
+    font-size: .8rem; padding: .3rem .9rem; border-radius: 50px;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .contact-info p { font-size: .95rem; color: var(--ink-mid); line-height: 1.7; margin-bottom: 2rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1rem; font-size: .9rem; color: var(--ink-mid);
+  }
+  .contact-item-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--orange-dim); color: var(--orange);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0;
+  }
+  .contact-item a { color: var(--orange); text-decoration: none; font-weight: 500; }
+  .contact-item a:hover { text-decoration: underline; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: .4rem; }
+  .form-group label { font-size: .8rem; font-weight: 600; letter-spacing: .04em; color: var(--ink-mid); }
+  .form-group input,
+  .form-group textarea {
+    padding: .75rem 1rem; border-radius: 10px;
+    border: 1.5px solid var(--border); background: var(--white);
+    font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--ink);
+    transition: border-color .2s;
+    outline: none;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus { border-color: var(--orange); }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); color: rgba(255,255,255,.5);
+    text-align: center; padding: 2rem 5vw;
+    font-size: .8rem; letter-spacing: .03em;
+  }
+  footer span { color: var(--orange); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    #hero { grid-template-columns: 1fr; text-align: center; padding-top: 90px; }
+    .hero-right { display: none; }
+    .hero-sub { margin: 0 auto 2rem; }
+    .hero-tags { justify-content: center; }
+    .hero-cta { justify-content: center; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .awards-inner { flex-direction: column; text-align: center; }
+    .nav-links { display: none; }
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .fade-up {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">VP.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="about">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-left">
+    <div class="hero-badge"><span></span> Open to Opportunities</div>
+    <h1>Vitish<br/><em>Pendharkar</em></h1>
+    <p class="hero-sub">Senior Technical Writer &amp; Knowledge Management Specialist with <strong>15+ years</strong> of experience turning complex technology into clear, user-friendly documentation — across FinTech, Cloud/AI, Fleet Management, and enterprise SaaS.</p>
+    <div class="hero-tags">
+      <span class="hero-tag tag-orange">Technical Writing</span>
+      <span class="hero-tag tag-sky">Knowledge Management</span>
+      <span class="hero-tag tag-violet">Business Analysis</span>
+      <span class="hero-tag tag-orange">API Documentation</span>
+      <span class="hero-tag tag-sky">Confluence</span>
+      <span class="hero-tag tag-violet">Agile / Scrum</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#portfolio" class="btn btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-circle">
+        <span class="avatar-initials">VP</span>
+      </div>
+      <div class="avatar-note">📍 Pune, Maharashtra</div>
+    </div>
+    <div class="stat-cards">
+      <div class="stat-card">
+        <div class="stat-num">15+</div>
+        <div class="stat-lbl">Years Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">10+</div>
+        <div class="stat-lbl">Companies Served</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">🏆 1</div>
+        <div class="stat-lbl">STC Award Winner</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label fade-up">What I Bring</p>
+  <h2 class="fade-up">Core Skills &amp;<br/>Expertise</h2>
+  <div class="divider fade-up"></div>
+  <div class="skills-grid">
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon orange">📝</div>
+      <h3>Technical Documentation</h3>
+      <div class="skill-pills">
+        <span class="pill">User Guides</span>
+        <span class="pill">Release Notes</span>
+        <span class="pill">Installation Guides</span>
+        <span class="pill">Online Help</span>
+        <span class="pill">SOPs</span>
+        <span class="pill">API Docs</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon sky">🛠️</div>
+      <h3>Authoring Tools</h3>
+      <div class="skill-pills">
+        <span class="pill">MadCap Flare</span>
+        <span class="pill">RoboHelp</span>
+        <span class="pill">Adobe FrameMaker</span>
+        <span class="pill">Adobe AEM</span>
+        <span class="pill">Oxygen XML</span>
+        <span class="pill">MediaWiki</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon violet">🗂️</div>
+      <h3>Knowledge Management</h3>
+      <div class="skill-pills">
+        <span class="pill">Confluence</span>
+        <span class="pill">Information Architecture</span>
+        <span class="pill">Metadata Structuring</span>
+        <span class="pill">Content Governance</span>
+        <span class="pill">Search Optimisation</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon orange">🔄</div>
+      <h3>Process &amp; Methodology</h3>
+      <div class="skill-pills">
+        <span class="pill">Agile / Scrum</span>
+        <span class="pill">JIRA</span>
+        <span class="pill">Docs-as-Code</span>
+        <span class="pill">Content Lifecycle</span>
+        <span class="pill">UI Text Review</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon sky">🏦</div>
+      <h3>Domain Expertise</h3>
+      <div class="skill-pills">
+        <span class="pill">FinTech</span>
+        <span class="pill">Cloud / AI</span>
+        <span class="pill">Fleet Management</span>
+        <span class="pill">CMS Platforms</span>
+        <span class="pill">Contract Management</span>
+        <span class="pill">Enterprise SaaS</span>
+      </div>
+    </div>
+
+    <div class="skill-card fade-up">
+      <div class="skill-icon violet">🤝</div>
+      <h3>Collaboration &amp; Leadership</h3>
+      <div class="skill-pills">
+        <span class="pill">Team Lead</span>
+        <span class="pill">Business Analysis</span>
+        <span class="pill">Requirements Gathering</span>
+        <span class="pill">Cross-functional Teams</span>
+        <span class="pill">Writer Mentoring</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <p class="section-label fade-up">Career Journey</p>
+  <h2 class="fade-up">Professional<br/>Experience</h2>
+  <div class="divider fade-up"></div>
+
+  <div class="timeline">
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Bridgenext</div>
+          <div class="tl-role">Technical Writer / Business Analyst</div>
+        </div>
+        <span class="tl-date">Nov 2024 – Feb 2026</span>
+      </div>
+      <p class="tl-desc">Developed and maintained CMS software documentation including user guides, release notes, and process documentation. Wore a dual hat as Business Analyst — gathering requirements and supporting documentation workflow improvements across technical and business teams.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">CMS Documentation</span>
+        <span class="tl-tag">Business Analysis</span>
+        <span class="tl-tag sky">Confluence</span>
+        <span class="tl-tag sky">JIRA</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot sky"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Intangles Lab</div>
+          <div class="tl-role">Technical Writer</div>
+        </div>
+        <span class="tl-date">Jul 2023 – Dec 2023</span>
+      </div>
+      <p class="tl-desc">Created and managed product knowledge base in Confluence for fleet management solutions. Pioneered the company's first UI text review initiative, lifting consistency across all product interfaces.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Fleet Management</span>
+        <span class="tl-tag sky">Confluence</span>
+        <span class="tl-tag violet">UI Text Review</span>
+        <span class="tl-tag violet">Knowledge Base</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot violet"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Encora</div>
+          <div class="tl-role">Lead Technical Writer</div>
+        </div>
+        <span class="tl-date">Sep 2021 – Aug 2022</span>
+      </div>
+      <p class="tl-desc">Led documentation for Micro Focus enterprise products. Managed bug-driven documentation workflows via JIRA, delivering accurate and consistent content aligned to Agile release cycles.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Enterprise Software</span>
+        <span class="tl-tag sky">JIRA</span>
+        <span class="tl-tag violet">Agile</span>
+        <span class="tl-tag">Micro Focus</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Intellect Design Arena</div>
+          <div class="tl-role">Contract Senior Technical Writer</div>
+        </div>
+        <span class="tl-date">Nov 2020 – Sep 2021</span>
+      </div>
+      <p class="tl-desc">Delivered technical and requirements documentation for enterprise FinTech applications. Established centralised project documentation on Confluence and supported cross-team documentation lifecycle management.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">FinTech</span>
+        <span class="tl-tag sky">Confluence</span>
+        <span class="tl-tag">Requirements Docs</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot sky"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Xoriant</div>
+          <div class="tl-role">Senior Technical Writer</div>
+        </div>
+        <span class="tl-date">Dec 2019 – Sep 2020</span>
+      </div>
+      <p class="tl-desc">Produced user guides, release notes, and technical documentation for enterprise products. Managed digital documentation assets in Adobe Experience Manager (AEM).</p>
+      <div class="tl-tags">
+        <span class="tl-tag">User Guides</span>
+        <span class="tl-tag sky">Adobe AEM</span>
+        <span class="tl-tag violet">Release Notes</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot violet"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">CloudMoyo</div>
+          <div class="tl-role">Senior Technical Writer</div>
+        </div>
+        <span class="tl-date">Mar 2018 – Oct 2018</span>
+      </div>
+      <p class="tl-desc">Led end-to-end documentation on a Cloud/AI platform. Developed online help systems in RoboHelp, trained junior writers, and drove UI text review processes across the product.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Cloud / AI</span>
+        <span class="tl-tag sky">RoboHelp</span>
+        <span class="tl-tag violet">Team Training</span>
+        <span class="tl-tag violet">Online Help</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">FIS Global</div>
+          <div class="tl-role">Senior Technical Writer</div>
+        </div>
+        <span class="tl-date">Aug 2016 – Feb 2018</span>
+      </div>
+      <p class="tl-desc">Acted as individual contributor across multiple FinTech documentation projects. Delivered release notes, installation guides, and user guides; participated in Agile ceremonies and requirements gathering.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">FinTech</span>
+        <span class="tl-tag">Installation Guides</span>
+        <span class="tl-tag sky">Agile / Scrum</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot sky"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">TechTalks</div>
+          <div class="tl-role">Senior Technical Writer (Team Lead)</div>
+        </div>
+        <span class="tl-date">Oct 2014 – Jul 2016</span>
+      </div>
+      <p class="tl-desc">Led the documentation team end-to-end. Delivered the celebrated Icertis CLM Wiki documentation project — a customised MediaWiki instance praised by the client and CTO, now a company selling point.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">Team Lead</span>
+        <span class="tl-tag sky">MediaWiki</span>
+        <span class="tl-tag violet">Icertis CLM</span>
+        <span class="tl-tag">Contract Mgmt</span>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot violet"></div>
+      <div class="tl-header">
+        <div>
+          <div class="tl-company">Fiserv &amp; Persistent Systems</div>
+          <div class="tl-role">Senior Technical Writer / Information Developer</div>
+        </div>
+        <span class="tl-date">Aug 2009 – Aug 2014</span>
+      </div>
+      <p class="tl-desc">Early career foundation across FinTech (Fiserv) and software product (Persistent Systems), building expertise in structured documentation, FrameMaker, and enterprise development environments.</p>
+      <div class="tl-tags">
+        <span class="tl-tag">FinTech</span>
+        <span class="tl-tag sky">Adobe FrameMaker</span>
+        <span class="tl-tag violet">Enterprise Software</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <p class="section-label fade-up">Work Samples</p>
+  <h2 class="fade-up">Portfolio</h2>
+  <div class="divider fade-up"></div>
+  <p class="section-lead fade-up">Real projects. Real challenges. Real outcomes.</p>
+
+  <div class="portfolio-grid">
+
+    <!-- Case Study 1: TechTalks Wiki -->
+    <div class="p-card fade-up">
+      <div class="p-card-header">
+        <div class="p-card-icon">🌐</div>
+        <div class="p-card-title">Enterprise Wiki Transformation</div>
+        <div class="p-card-client">TechTalks · Icertis CLM</div>
+      </div>
+      <div class="p-card-body">
+        <p>Delivered a fully customised MediaWiki help portal for a large enterprise CLM client — redesigned with a brand-matched blue theme, role-based content architecture, and a custom landing page built by combining Wiki and HTML tags under a tight 2–3 week deadline.</p>
+        <div class="p-outcome">🏆 Outcome: Praised by CTO and client stakeholders — now a company selling point used in customer training.</div>
+        <div class="tl-tags">
+          <span class="tl-tag sky">MediaWiki</span>
+          <span class="tl-tag violet">Information Architecture</span>
+          <span class="tl-tag">CSS Customisation</span>
+          <span class="tl-tag">Role-based Content</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Case Study 2: BlackBerry AtHoc -->
+    <div class="p-card fade-up">
+      <div class="p-card-header violet-bg">
+        <div class="p-card-icon">📱</div>
+        <div class="p-card-title">BlackBerry AtHoc Mobile App</div>
+        <div class="p-card-client">Xoriant · BlackBerry</div>
+      </div>
+      <div class="p-card-body">
+        <p>Created new feature topics — including the Collaboration module — for the BlackBerry AtHoc Mobile App User's Guide, managed in Adobe Experience Manager (AEM). Responsible for content creation, review, and accuracy across rapid release cycles.</p>
+        <div class="p-outcome violet-outcome">📄 Live Document: Published on BlackBerry's official documentation portal.</div>
+        <div class="tl-tags">
+          <span class="tl-tag sky">Adobe AEM</span>
+          <span class="tl-tag violet">Mobile App Docs</span>
+          <span class="tl-tag">User Guide</span>
+        </div>
+        <a href="https://docs.blackberry.com/en/id-comm-collab/blackberry-athoc/mobile-apps/4_9/mobileuser/Collaboration" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:1rem; font-size:.82rem; padding:.55rem 1.2rem;">View Live Doc ↗</a>
+      </div>
+    </div>
+
+    <!-- Case Study 3: Fleet Management KB -->
+    <div class="p-card fade-up">
+      <div class="p-card-header" style="background: linear-gradient(135deg, var(--sky-lt), var(--violet-lt));">
+        <div class="p-card-icon">🚛</div>
+        <div class="p-card-title">Fleet Management Knowledge Base</div>
+        <div class="p-card-client">Intangles Lab</div>
+      </div>
+      <div class="p-card-body">
+        <p>Built and structured the product knowledge base from the ground up in Confluence for a fleet management SaaS platform. Also pioneered the company's first formal UI text review process — improving consistency and tone across all product touchpoints.</p>
+        <div class="p-outcome">✅ Outcome: Established a scalable documentation foundation and set the internal standard for UI copy quality.</div>
+        <div class="tl-tags">
+          <span class="tl-tag sky">Confluence</span>
+          <span class="tl-tag violet">Knowledge Base</span>
+          <span class="tl-tag">UI Text Review</span>
+          <span class="tl-tag">SaaS</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards">
+  <p class="section-label fade-up">Recognition</p>
+  <h2 class="fade-up" style="color:var(--white);">Award &amp;<br/>Honours</h2>
+  <div class="divider fade-up"></div>
+  <div class="awards-inner fade-up">
+    <div class="award-icon-wrap">🏆</div>
+    <div class="award-body">
+      <h3>STC India Annual Documentation Competition</h3>
+      <p>Recognised in the Society for Technical Communication (STC) India Annual Documentation Competition under the <strong>Best Practices</strong> category — one of the most respected honours in the Indian technical writing community, awarded for excellence in documentation methodology and quality.</p>
+      <span class="award-year">2015</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label fade-up">Let's Talk</p>
+  <h2 class="fade-up">Get in Touch</h2>
+  <div class="divider fade-up"></div>
+
+  <div class="contact-grid">
+    <div class="contact-info fade-up">
+      <h3>Open to new opportunities &amp; collaborations</h3>
+      <p>Whether you're looking for a Senior Technical Writer, a Knowledge Management specialist, or someone who can bridge writing and business analysis — I'd love to hear from you.</p>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div><a href="mailto:vitish.pendharkar@gmail.com">vitish.pendharkar@gmail.com</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div><a href="tel:+917798303315">+91 77983 03315</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">💼</div>
+        <div><a href="https://www.linkedin.com/in/vitish-pendharkar-16895512" target="_blank" rel="noopener">LinkedIn Profile ↗</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>Pune, Maharashtra, India</div>
+      </div>
+    </div>
+
+    <div class="fade-up">
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>YOUR NAME</label>
+          <input type="text" placeholder="e.g. Priya Sharma" required/>
+        </div>
+        <div class="form-group">
+          <label>EMAIL ADDRESS</label>
+          <input type="email" placeholder="you@company.com" required/>
+        </div>
+        <div class="form-group">
+          <label>COMPANY / ORGANISATION</label>
+          <input type="text" placeholder="Your company name"/>
+        </div>
+        <div class="form-group">
+          <label>MESSAGE</label>
+          <textarea placeholder="Tell me about the role or project..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Message →</button>
+        <p id="form-msg" style="font-size:.85rem;color:var(--orange);display:none;margin-top:.5rem;">✅ Thanks! I'll get back to you shortly.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <span>Vitish Pendharkar</span> · Senior Technical Writer · Pune, India</p>
+  <p style="margin-top:.4rem;">Built with precision — because documentation matters.</p>
+</footer>
+
+<script>
+  // Scroll animation observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up, .tl-item').forEach(el => observer.observe(el));
+
+  // Stagger timeline items
+  document.querySelectorAll('.tl-item').forEach((el, i) => {
+    el.style.transitionDelay = `${i * 0.07}s`;
+  });
+
+  // Contact form mock submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    document.getElementById('form-msg').style.display = 'block';
+    e.target.reset();
+  }
+</script>
+</body>
+</html>
